@@ -16,3 +16,4 @@ insert into myboard(title,content,writer)
 values('게시판 연습','게시판 연습','선생님');
 
 select * from myboard order by idx desc;
+
