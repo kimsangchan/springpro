@@ -61,7 +61,7 @@
     <div class="panel-heading">회원정보 수정</div>
     <div class="panel-body">
     	
-    	<form name="frm" action="${contextPath}/memUpdateForm.do" method="post">
+    	<form name="frm" action="${contextPath}/memUpdate.do" method="post">
     	<input type="hidden" id="memID" name="memID" value="${mvo.memID}"/>
     	<input type="hidden" id="memPassword" name="memPassword" value=""/>
 		<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">
@@ -91,25 +91,25 @@
 				<td style="width: 110px; vertical-align: middle;">성별</td>
 				<td colspan="2">
 					<div class="form-group" style="text-align: center; margin: 0 auto;">
-						<div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-primary <c:if test="${mvo.memGender eq '남자'}">active</c:if>">
-								<input type="radio" id="memGender" name="memGender" autocomplete="off" value="남자"
-								<c:if test="${mvo.memGender eq '남자'}">checked</c:if> />남자
-							</label>
-							<label class="btn btn-primary <c:if test="${mvo.memGender eq '여자'}">active</c:if>">
-								<input type="radio" id="memGender" name="memGender" autocomplete="off" value="여자"
-								<c:if test="${mvo.memGender eq '여자'}">checked</c:if> />여자
-							</label>						
-						</div>
-					</div>
+                    <div class="btn-group" data-toggle="buttons">
+                       <label class="btn btn-primary <c:if test="${mvo.memGender eq '남자'}"> active</c:if>">
+                         <input type="radio"  name="memGender" autocomplete="off" value="남자" 
+                           <c:if test="${mvo.memGender eq '남자'}"> checked</c:if> />남자
+                       </label>
+                        <label class="btn btn-primary <c:if test="${mvo.memGender eq '여자'}"> active</c:if>">
+                         <input type="radio"  name="memGender" autocomplete="off" value="여자"
+                           <c:if test="${mvo.memGender eq '여자'}"> checked</c:if> />여자
+                       </label>
+                    </div>                    
+                </div>
 				</td>
 			</tr>
 			<tr>
 				<td style="width: 110px; vertical-align: middle;">Age:</td>
 				<td colspan="2">
 					<select id="memAge" name="memAge">
-						<c:forEach var="i" begin="18" end="100">
-							<option value="${mvo.memAge}">${mvo.memAge}</option>
+						<c:forEach var="i" begin="18" end="100">	
+							 <option value="${i}" ${i == mvo.memAge ? "selected" : ""}>${i}</option>						
 						</c:forEach>
 					</select>
 				</td>
@@ -122,32 +122,10 @@
 		</table>
 	</form>
     
-    </div>
-    <!-- 다이얼로그창(모달) -->
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	
-	    <!-- Modal content-->
-	    <div id="checkType" class="modal-content panel-info">
-	      <div class="modal-header panel-heading">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Modal Header</h4>
-	      </div>
-	      <div class="modal-body">
-	        <p id="checkMessage"></p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	
-	  </div>
-	</div>
+    </div>   
 	<!-- 실패 메세지를 출력(modal) -->
-	<div id="myMessage" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	
+	<div id="myMessage" class="modal fade" role="dialog" >
+	  <div class="modal-dialog">	
 	    <!-- Modal content-->
 	    <div id="messageType" class="modal-content panel-info">
 	      <div class="modal-header panel-heading">
@@ -160,10 +138,9 @@
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
-	    </div>
-	
+	    </div>	
 	  </div>
-	</div>
+	</div>    
     <div class="panel-footer">Footer</div>
   </div>
 </div>

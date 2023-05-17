@@ -13,6 +13,11 @@
   	select * from mem_tbl
   	where memID=#{memID} and memPassword=#{memPassword}
   </select>
+  <update id="memUpdate" parameterType="kr.board.entity.Member">
+  	UPDATE mem_tbl SET memID = #{memID}, memPassword = #{memPassword}, memName = #{memName},
+  			memAge = #{memAge},	memGender = #{memGender}, memEmail = #{memEmail}
+ 			WHERE memID = #{memID}
+  </update>
   
 </mapper>
 
