@@ -8,7 +8,7 @@ public class Member {
 	private String memID;
 	private String memPassword;
 	private String memName;
-	private int memAge;
+	private int memAge;	// <-null, 0
 	private String memGender;
 	private String memEmail;
 	private String memProfile;
