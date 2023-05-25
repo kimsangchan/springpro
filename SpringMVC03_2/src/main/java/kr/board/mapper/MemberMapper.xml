@@ -18,6 +18,11 @@
   			memAge = #{memAge},	memGender = #{memGender}, memEmail = #{memEmail}
  			WHERE memID = #{memID}
   </update>
-  
+  <select id="getMember" resultType="kr.board.entity.Member">
+  	select * from mem_tbl where memID=#{memID}
+  </select>
+  <update id="memProfileUpdate" parameterType="kr.board.entity.Member">
+  	update mem_tbl set memProfile=#{memProfile} where memID=#{memID}
+  </update>
 </mapper>
 

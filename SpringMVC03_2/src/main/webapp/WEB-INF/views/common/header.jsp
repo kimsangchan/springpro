@@ -20,23 +20,15 @@
       </ul>
 		<c:if test="${empty mvo}">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">접속하기 <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="${contextPath}/memLoginForm.do">로그인</a></li>
-						<li><a href="${contextPath}/memJoin.do">회원가입</a></li>
-					</ul></li>
+				<li><a href="${contextPath}/memLoginForm.do"><span class="glyphicon glyphicon-user"></span>&nbsp;로그인</a></li>
+				<li><a href="${contextPath}/memJoin.do"><span class="glyphicon glyphicon-log-in"></span>&nbsp;회원가입</a></li>
 			</ul>
 		</c:if>
 		<c:if test="${!empty mvo}">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">회원관리 <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="${contextPath}/memUpdateForm.do">마이페이지</a></li>
-						<li><a href="#">프로필사진등록</a></li>
-						<li><a href="${contextPath}/memLogout.do">로그아웃</a></li>
-					</ul></li>
+				<li><a href="${contextPath}/memUpdateForm.do"><span class="glyphicon glyphicon-user">마이페이지</a></li>
+				<li><a href="${contextPath}/memImageForm.do"><span class="glyphicon glyphicon-picture">프로필사진등록</a></li>
+				<li><a href="${contextPath}/memLogout.do"><span class="glyphicon glyphicon-log-out">로그아웃</a></li>
 			</ul>
 		</c:if>
 		</div>
