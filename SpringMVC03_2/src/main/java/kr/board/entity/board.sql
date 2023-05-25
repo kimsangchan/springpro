@@ -7,7 +7,8 @@ create table myboard(
 	count int default 0,
 	primary key(idx)
 );
-
+ALTER TABLE myboard ADD memID varchar(20) not null;
+UPDATE myboard SET memID = '111';
 insert into myboard(title,content,writer)
 values('게시판 연습','게시판 연습','관리자');
 insert into myboard(title,content,writer)
@@ -16,7 +17,9 @@ insert into myboard(title,content,writer)
 values('게시판 연습','게시판 연습','선생님');
 
 select * from myboard order by idx desc;
-
+UPDATE myboard
+SET writer = 111
+WHERE memID = 111;
 create table mem_tbl(
 	memIdx int auto_increment,
 	memID varchar(20) not null,
