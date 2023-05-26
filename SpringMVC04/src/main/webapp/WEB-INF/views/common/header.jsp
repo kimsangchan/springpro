@@ -27,14 +27,14 @@
 		<c:if test="${!empty mvo}">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="${contextPath}/memUpdateForm.do"><span class="glyphicon glyphicon-user">마이페이지</a></li>
-				<li><a href="${contextPath}/memImageForm.do"><span class="glyphicon glyphicon-picture">프로필사진등록</a></li>
+				<li><a href="${contextPath}/memImageForm.do"><span class="glyphicon glyphicon-picture">사진등록</a></li>
 				<li><a href="${contextPath}/memLogout.do"><span class="glyphicon glyphicon-log-out">로그아웃</a></li>
 				<c:if test="${!empty mvo}">
-					<c:if test="${mvo.memProfile eq ''}">
+					<c:if test="${empty mvo.memProfile}">
 						<li><img class="img-circle" src="${contextPath}/resources/images/defaultImage.png"
 							style="width: 50px; height: 50px" />${mvo.memName} 님 Welcome.</li>
 					</c:if>
-					<c:if test="${mvo.memProfile ne ''}">
+					<c:if test="${!empty mvo.memProfile}">
 						<li><img class="img-circle" src="${contextPath}/resources/upload/${mvo.memProfile}"
 							style="width: 50px; height: 50px" />${mvo.memName} 님 Welcome.</li>
 					</c:if>

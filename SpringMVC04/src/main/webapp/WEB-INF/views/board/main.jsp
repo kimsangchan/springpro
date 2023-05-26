@@ -14,6 +14,8 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+	var csrfHeaderName = "${_csrf.headerName}"; 
+	var csrfTokenValue = "${_csrf.token}";
 	$(document).ready(function() {
 		loadList();
 	});
@@ -100,6 +102,9 @@
 			url : "board/new",
 			type : "post",
 			data : fData,
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
+				},
 			success : loadList,
 			error : function() {
 				alert("error")
@@ -128,6 +133,9 @@
 			$.ajax({
 				url : "board/count/"+idx,
 				type : "put",
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
+					},
 				dataType : "json",
 				success : function(data){
 					$("#cnt"+idx).text(data.count);
@@ -141,6 +149,9 @@
 		$.ajax({
 			url : "board/"+idx,
 			type : "delete",
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
+				},
 			success : loadList,
 			error : function() {
 				alert("error")
@@ -162,6 +173,9 @@
 		$.ajax({
 			url : "board/update",
 			type : "put",
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
+				},
 			contentType:'application/json;charset=utf-8',
 			data : JSON.stringify({
 				"idx" : idx,
