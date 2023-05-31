@@ -4,11 +4,13 @@ package kr.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import kr.board.entity.AuthVO;
 import kr.board.entity.Member;
 import kr.board.mapper.MemberMapper;
 
@@ -26,7 +29,9 @@ public class MemberController {
 	
 	@Autowired
 	MemberMapper memberMapper;
-	
+	// 추가
+	@Autowired
+	PasswordEncoder pwEncoder;
 	@RequestMapping("/memJoin.do")
 	public String memJoin() {
 		return "member/join";
@@ -49,7 +54,7 @@ public class MemberController {
 			   memPassword1==null || memPassword1.equals("") ||
 			   memPassword2==null || memPassword2.equals("") ||
 			   m.getMemName()==null || m.getMemName().equals("") ||	
-			   m.getMemAge()==0 ||
+			   m.getMemAge()==0 || m.getAuthList().size() == 0 ||
 			   m.getMemGender()==null || m.getMemGender().equals("") ||
 			   m.getMemEmail()==null || m.getMemEmail().equals("")) {
 			   // 누락메세지를 가지고 가기? =>객체바인딩(Model, HttpServletRequest, HttpSession)
@@ -64,11 +69,28 @@ public class MemberController {
 			}		
 			m.setMemProfile(""); // 사진이미는 없다는 의미 ""
 			// 회원을 테이블에 저장하기
+			// 추가 : 비밀번호를 암호화 하기(API)
+			String encyptPw = pwEncoder.encode(m.getMemPassword());
+			m.setMemPassword(encyptPw);
+			
+			// register() 수정
 			int result=memberMapper.register(m);
 			if(result==1) { // 회원가입 성공 메세지
+				// 추가 : 권한테이블에 회원의 권한을 저장하기
+				List<AuthVO> list = m.getAuthList();
+				for(AuthVO authVO : list) {
+					if(authVO.getAuth() != null) {
+						AuthVO saveVO=new AuthVO();
+						saveVO.setMemID(m.getMemID()); // 회원아이디
+						saveVO.setAuth(authVO.getAuth()); // 회원의권한
+						memberMapper.authInsert(saveVO);
+					}
+				}
 			   rttr.addFlashAttribute("msgType", "성공 메세지");
 			   rttr.addFlashAttribute("msg", "회원가입에 성공했습니다.");
 			   // 회원가입이 성공하면=>로그인처리하기
+			   // getMember() -> 회원정보 + 권한정보
+			   //Member mvo=memberMapper.getMember(m.getMemID());
 			   session.setAttribute("mvo", m); // ${!empty mvo}
 			   return "redirect:/";
 			}else {

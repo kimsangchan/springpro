@@ -48,7 +48,15 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.springsecurity-version}</version>
-		</dependency>					
+		</dependency>
+	
+	  <!-- Other dependencies -->
+	  <dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-core</artifactId>
+	    <version>${org.springsecurity-version}</version>
+	  </dependency>
+				
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>

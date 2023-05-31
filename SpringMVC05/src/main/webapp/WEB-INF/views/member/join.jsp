@@ -131,12 +131,22 @@
 					</select>
 				</td>
 			</tr>
+			<!-- 권한 체크박스추가 -->
 			<tr>
-				<td colspan="3" style="text-align: left;">
-					<span id="passMessage" style="color: red"></span><input type="button" class="btn btn-primary btn-sm pull-right" value="Register" onclick="goInsert()"/>
-				</td>
+				<td style="width: 110px; vertical-align: middle;">사용자 권한</td>
+             <td colspan="2">
+                <input type="checkbox" name="authList[0].auth" value="ROLE_USER"> ROLE_USER
+	            <input type="checkbox" name="authList[1].auth" value="ROLE_MANAGER"> ROLE_MANAGER
+	            <input type="checkbox" name="authList[2].auth" value="ROLE_ADMIN"> ROLE_ADMIN           
+            </tr>
 			</tr>
-		</table>
+			<tr>
+			<td colspan="3" style="text-align: left;"><span
+						id="passMessage" style="color: red"></span><input type="button"
+						class="btn btn-primary btn-sm pull-right" value="Register"
+						onclick="goInsert()" /></td>
+				</tr>
+			</table>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> 
 	</form>
     

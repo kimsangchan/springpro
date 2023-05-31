@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -26,6 +25,7 @@ public class MemberController {
 	
 	@Autowired
 	MemberMapper memberMapper;
+	
 	
 	@RequestMapping("/memJoin.do")
 	public String memJoin() {
@@ -141,6 +141,7 @@ public class MemberController {
 			   return "redirect:/memUpdateForm.do";  // ${msgType} , ${msg}
 			}		
 			// 회원을 수정저장하기
+			// 추가 : 비밀번호를 암호화 하기(API)
 			int result=memberMapper.memUpdate(m);
 			if(result==1) { // 수정성공 메세지
 			   rttr.addFlashAttribute("msgType", "성공 메세지");

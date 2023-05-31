@@ -1,35 +1,26 @@
-create table myboard(
-	idx int not null auto_increment,
-	title varchar(100) not null,
-	content varchar(2000) not null,
-	writer varchar(30) not null,
-	indate datetime default now(),
-	count int default 0,
-	primary key(idx)
+create table mem_stbl(
+memIdx int not null,
+memID varchar(20) not null,
+memPassword varchar(68) not null,
+memName varchar(20) not null,
+memAge int,
+memGender varchar(20),
+memEmail varchar(50),
+memProfile varchar(50),
+primary key(memID)
 );
-ALTER TABLE myboard ADD memID varchar(20) not null;
-UPDATE myboard SET memID = '111';
-insert into myboard(title,content,writer)
-values('게시판 연습','게시판 연습','관리자');
-insert into myboard(title,content,writer)
-values('게시판 연습','게시판 연습','박매일');
-insert into myboard(title,content,writer)
-values('게시판 연습','게시판 연습','선생님');
+ALTER TABLE mem_stbl
+MODIFY COLUMN memPassword varchar(68) NOT NULL;
 
-select * from myboard order by idx desc;
-UPDATE myboard
-SET writer = 111
-WHERE memID = 111;
-create table mem_tbl(
-	memIdx int auto_increment,
-	memID varchar(20) not null,
-	memPassword varchar(20) not null,
-	memName varchar(20) not null,
-	memAge int,
-	memGender varchar(20),
-	memEmail varchar(50),
-	memProfile varchar(50),
-	primary key(memIdx)
-);
+select * from mem_stbl
 
-select * from mem_tbl
+
+create table	mem_auth	(
+no int not null auto_increment,
+memID varchar(50) not null,
+auth varchar(50) not null,
+primary key(no),
+constraint fk_member_auth foreign key(memID)
+				references mem_stbl(memID)
+);				
+select * from mem_auth
