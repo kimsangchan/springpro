@@ -167,12 +167,29 @@ public class MemberController {
 			   return "redirect:/memUpdateForm.do";  // ${msgType} , ${msg}
 			}		
 			// 회원을 수정저장하기
+			//	추가	:	비밀번호 암호화
+			String encyptPW = pwEncoder.encode(m.getMemPassword());
+			m.setMemPassword(encyptPW);
 			int result=memberMapper.memUpdate(m);
 			if(result==1) { // 수정성공 메세지
+				//	기존권한을 삭제하고
+				memberMapper.authDelete(m.getMemID());
+				List<AuthVO> list = m.getAuthList();				
+					
+				// 새로운 권한을 추가하기
+				for(AuthVO authVO : list) {
+					if(authVO.getAuth() != null) {
+						AuthVO saveVO=new AuthVO();
+						saveVO.setMemID(m.getMemID()); // 회원아이디
+						saveVO.setAuth(authVO.getAuth()); // 회원의권한
+						memberMapper.authInsert(saveVO);
+					}
+				}
 			   rttr.addFlashAttribute("msgType", "성공 메세지");
 			   rttr.addFlashAttribute("msg", "회원정보 수정에 성공했습니다.");
 			   // 회원수정이 성공하면=>로그인처리하기
 			   Member mvo=memberMapper.getMember(m.getMemID());
+			   System.out.println(mvo);
 			   session.setAttribute("mvo", m); // ${!empty mvo}
 			   return "redirect:/";
 			}else {

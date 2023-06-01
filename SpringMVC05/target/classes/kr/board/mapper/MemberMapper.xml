@@ -33,7 +33,7 @@
        mem.memID=auth.memID where mem.memID=#{memID}
   </select>
   <update id="memUpdate" parameterType="kr.board.entity.Member">
-  	UPDATE mem_tbl SET memID = #{memID}, memPassword = #{memPassword}, memName = #{memName},
+  	UPDATE mem_stbl SET memID = #{memID}, memPassword = #{memPassword}, memName = #{memName},
   			memAge = #{memAge},	memGender = #{memGender}, memEmail = #{memEmail}
  			WHERE memID = #{memID}
   </update>
@@ -43,11 +43,14 @@
      mem.memID=auth.memID where mem.memID=#{memID}
   </select>
   <update id="memProfileUpdate" parameterType="kr.board.entity.Member">
-  	update mem_tbl set memProfile=#{memProfile} where memID=#{memID}
+  	update mem_stbl set memProfile=#{memProfile} where memID=#{memID}
   </update>
   
   <insert id="authInsert" parameterType="kr.board.entity.AuthVO">
   	INSERT INTO mem_auth(memID, auth) values(#{memID}, #{auth})
   </insert>
+  <delete id="authDelete">
+  	delete from mem_auth where memID=#{memID}
+  </delete>
 </mapper>
 
