@@ -26,7 +26,7 @@
 
 	<div class="container">
 	<c:if test="${empty mvo}">
-		<label>Srping MVC03</label>
+		<label>Spring MVC05</label>
 	</c:if>
 	
 	<div class="panel panel-default">
