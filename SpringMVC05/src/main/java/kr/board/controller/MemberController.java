@@ -32,6 +32,7 @@ public class MemberController {
 	// 추가
 	@Autowired
 	PasswordEncoder pwEncoder;
+	
 	@RequestMapping("/memJoin.do")
 	public String memJoin() {
 		return "member/join";
@@ -90,8 +91,9 @@ public class MemberController {
 			   rttr.addFlashAttribute("msg", "회원가입에 성공했습니다.");
 			   // 회원가입이 성공하면=>로그인처리하기
 			   // getMember() -> 회원정보 + 권한정보
-			   //Member mvo=memberMapper.getMember(m.getMemID());
-			   session.setAttribute("mvo", m); // ${!empty mvo}
+			   Member mvo=memberMapper.getMember(m.getMemID());
+			   System.out.println(mvo);
+			   session.setAttribute("mvo", mvo); // ${!empty mvo}
 			   return "redirect:/";
 			}else {
 			   rttr.addFlashAttribute("msgType", "실패 메세지");
