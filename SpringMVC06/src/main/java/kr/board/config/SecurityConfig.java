@@ -21,6 +21,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		filter.setEncoding("UTF-8");
 		filter.setForceEncoding(true);
 		http.addFilterBefore(filter,CsrfFilter.class);
+		// 요청에 따른 권한을 확인하여 서비스 하는 부분 - 1
+		http
+			.authorizeRequests()
+				.antMatchers("/")
+				.permitAll()
+				.and()
+			.formLogin()
+				.loginPage("/memLoginForm.do")
+				.loginProcessingUrl("/memLogin.do")
+				.permitAll()
+				.and()
+			.logout()
+				.invalidateHttpSession(true)
+				.logoutSuccessUrl("/")
+				.and()
+			.exceptionHandling().accessDeniedPage("/access-denied");
 	}
 	
 	// 패스워드 인코딩 객체 설정

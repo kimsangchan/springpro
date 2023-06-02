@@ -24,3 +24,7 @@ constraint fk_member_auth foreign key(memID)
 				references mem_stbl(memID)
 );				
 select * from mem_auth
+select * from myboard
+delete from mem_stbl;
+delete from mem_auth;
+delete from myboard;
