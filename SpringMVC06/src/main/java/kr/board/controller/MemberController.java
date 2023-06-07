@@ -91,11 +91,8 @@ public class MemberController {
 			   rttr.addFlashAttribute("msgType", "성공 메세지");
 			   rttr.addFlashAttribute("msg", "회원가입에 성공했습니다.");
 			   // 회원가입이 성공하면=>로그인처리하기
-			   // getMember() -> 회원정보 + 권한정보
-			   Member mvo=memberMapper.getMember(m.getMemID());
-			   System.out.println(mvo);
-			   session.setAttribute("mvo", mvo); // ${!empty mvo}
-			   return "redirect:/";
+			  
+			   return "redirect:/memLoginForm.do";
 			}else {
 			   rttr.addFlashAttribute("msgType", "실패 메세지");
 			   rttr.addFlashAttribute("msg", "이미 존재하는 회원입니다.");
@@ -103,42 +100,13 @@ public class MemberController {
 			}		
 		}
 		
-		// 로그아웃 처리
-		@RequestMapping("/memLogout.do")
-		public String memLogout(HttpSession session) {
-			session.invalidate();
-			return "redirect:/";
-		}
 		
-		// 로그인 화면으로 이동
+		// 로그인 화면으로 이동(스프링 시큐리티)
 		@RequestMapping("/memLoginForm.do")
 		public String memLoginForm() {
 			return "member/memLoginForm"; // memLoginForm.jsp
 		}
 		
-		// 로그인 기능 구현
-		@RequestMapping("/memLogin.do")
-		public String memLogin(Member m, RedirectAttributes rttr, HttpSession session) {
-			if(m.getMemID()==null || m.getMemID().equals("") ||
-			   m.getMemPassword()==null || m.getMemPassword().equals("")) {
-			   rttr.addFlashAttribute("msgType", "실패 메세지");
-			   rttr.addFlashAttribute("msg", "모든 내용을 입력해주세요.");
-			   return "redirect:/memLoginForm.do";			
-			}
-			Member mvo=memberMapper.memLogin(m);
-			// 추가 : 비밀번호 일치여부 체크
-			if(mvo!=null && pwEncoder.matches(m.getMemPassword(), mvo.getMemPassword())) { // 로그인에 성공
-			   rttr.addFlashAttribute("msgType", "성공 메세지");
-			   rttr.addFlashAttribute("msg", "로그인에 성공했습니다.");
-			   session.setAttribute("mvo", mvo); // ${!empty mvo}
-			   System.out.println(mvo);
-			   return "redirect:/";	 // 메인		
-			}else { // 로그인에 실패
-			   rttr.addFlashAttribute("msgType", "실패 메세지");
-			   rttr.addFlashAttribute("msg", "다시 로그인 해주세요.");
-			   return "redirect:/memLoginForm.do";
-			}		
-		}
 		
 		// 회원정보수정화면
 		@RequestMapping("/memUpdateForm.do")

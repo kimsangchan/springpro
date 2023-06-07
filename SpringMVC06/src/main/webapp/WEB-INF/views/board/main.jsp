@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="mvo" value="${SPRING_SECURITY_CONTEXT.authentication.principal}"/>
+<c:set var="auth" value="${SPRING_SECURITY_CONTEXT.authentication.authorities}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +60,7 @@
 							listHtml += "<td>내용</td>";
 							listHtml += "<td colspan='4'>";
 							listHtml += "<textarea id='ta"+obj.idx+"' readonly rows='7' class='form-control'></textarea>";
-							if("${mvo.memID}"==obj.memID){
+							if("${mvo.member.memID}"==obj.memID){
 							listHtml += "</br>";
 							listHtml += "<span id='ub"+obj.idx+"'><button class='btn btn-success btn-sm' onclick='goUpdateForm("
 									+ obj.idx + ")'>수정</button></span>&nbsp";
@@ -74,7 +77,8 @@
 							listHtml += "</td>";
 							listHtml += "</tr>";
 						});
-		if(${!empty mvo}){
+		//	로그인을 해야 보이는 부분
+		if(${!empty mvo.member}){
 			listHtml += "<tr >";
 			listHtml += "<td colspan='5'>";
 			listHtml += "<button class='btn btn-primary btn-sm' onclick='goForm()'>글쓰기</button>";
@@ -199,7 +203,7 @@
 			<div class="panel-body" id="view">A Basic Content</div>
 			<div class="panel-body" id="wForm" style="display: none">
 				<form id="frm">
-				<input type="hidden" name="memID" value="${mvo.memID}"/>
+				<input type="hidden" name="memID" value="${mvo.member.memID}"/>
 					<table class="table">
 						<tr>
 							<td>제목</td>
@@ -214,7 +218,7 @@
 						<tr>
 							<td>작성자</td>
 							<td><input type="text" id="writer" name="writer"
-								class="form-control" value="${mvo.memName}" readonly="readonly"/></td>
+								class="form-control" value="${mvo.member.memName}" readonly="readonly"/></td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center">

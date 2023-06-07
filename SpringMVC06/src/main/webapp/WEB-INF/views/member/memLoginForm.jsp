@@ -14,10 +14,17 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
   		$(document).ready(function(){
-  			if(${!empty msgType}){  				
+  			if(${param.error!=null}){
   				$("#messageType").attr("class","modal-content panel-warning");  				
+  				$(".modal-body").text("아이디와 비밀번호를 확인해주세요");
+  				$(".modal-title").text("실패 메시지");
   				$("#myMessage").modal("show");
+  				
   			}
+  			if(${!empty msgType}){
+  		   		$("#messageType").attr("class", "modal-content panel-success");    
+  		  		$("#myMessage").modal("show");
+  		  	}
   		});
   </script>
 </head>
@@ -33,12 +40,12 @@
 				<table class="table table-bordered" style="text-align: center; border: 1px solid #dddddd;">				
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">ID:</td>
-						<td><input class="form-control" type="text" maxlength="20" placeholder="아이디를 입력하세요." id="memID" name="memID"></td>
+						<td><input class="form-control" type="text" maxlength="20" placeholder="아이디를 입력하세요." id="memID" name="username"></td>
 						
 					</tr>					
 					<tr>
 						<td style="width: 110px; vertical-align: middle;">Password:</td>
-						<td colspan="2"><input class="form-control" maxlength="20" placeholder="비밀번호를 입력하세요." type="password" id="memPassword" name="memPassword"></td>
+						<td colspan="2"><input class="form-control" maxlength="20" placeholder="비밀번호를 입력하세요." type="password" id="memPassword" name="password"></td>
 					</tr>					
 					<tr>
 						<td colspan="2" style="text-align: left;">
