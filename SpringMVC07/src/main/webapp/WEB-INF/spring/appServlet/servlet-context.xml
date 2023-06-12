@@ -22,8 +22,6 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="kr.bit.controller" />
-	<context:component-scan base-package="kr.bit.service" />
 	
-	
-	
+		
 </beans:beans>
