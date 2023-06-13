@@ -27,4 +27,14 @@
 						parameterType="kr.bit.entity.Member">
 		select * from tblMember where memID=#{memID} and memPwd=#{memPwd}
 	</select>
+	
+	<update id="update" parameterType="kr.bit.entity.Board">
+		update tblBoard set title=#{title}, content=#{content}
+		where idx=#{idx}
+	</update>
+	
+	<select id="read" resultType="kr.bit.entity.Board">
+		select * from tblBoard where idx=#{idx}
+	</select>
+	
 </mapper>
