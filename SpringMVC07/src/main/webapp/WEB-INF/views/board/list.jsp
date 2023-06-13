@@ -16,10 +16,23 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
   	$(document).ready(function(){
+  		var result = '${result}';
+  		checkModal(result);
+  		
   		$("#regBtn").click(function(){
   			location.href="${cpath}/board/register";
   		});
   	});
+  	function checkModal(result){
+  		if(result ==''){
+  			return;
+  		}
+  		if(parseInt(result)>0){
+  			// 새로운 다이얼로그창
+  			$(".modal-body").html("게시글 "+ result +"번이 등록되었습니다.");
+   		}
+  		$("#myModal").modal("show");
+  	}
   </script>
 </head>
 <body>
@@ -78,6 +91,26 @@
     		</tr>
     		</c:if>    		
     	</table>
+    	<!-- Modal 추가 -->
+	  <div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Modal Header</h4>
+		      </div>
+		      <div class="modal-body">		      		       
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		
+		  </div>
+		</div>
+	  <!-- Modal END -->	
     </div>
     <div class="panel-body">Surable Technology Co., Ltd</div>
   </div>
