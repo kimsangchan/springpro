@@ -11,4 +11,20 @@
 		IFNULL(max(boardGroup)+1, 0), 0, 0, 1
 		 from tblBoard
 	</insert>
+	
+	<insert id="insertSelectKey" parameterType="kr.bit.entity.Board">
+		<selectKey keyProperty="idx,boardGroup" resultType="kr.bit.entity.Board" order="BEFORE">
+			select IFNULL(MAX(idx)+1, 1) as idx,
+			IFNULL(max(boardGroup)+1, 0) as boardGroup
+			from tblBoard
+		</selectKey>
+		insert into 
+		tblBoard(idx,memID,title,content,writer,boardGroup,boardSequence,boardLevel, boardAvailable)
+		value(#{idx}, #{memID}, #{title}, #{content}, #{writer}, #{boardGroup}, 0, 0, 1)		
+	</insert>
+	
+	<select id="login" resultType="kr.bit.entity.Member"
+						parameterType="kr.bit.entity.Member">
+		select * from tblMember where memID=#{memID} and memPwd=#{memPwd}
+	</select>
 </mapper>

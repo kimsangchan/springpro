@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.bit.entity.Board;
@@ -29,5 +30,10 @@ public class BoardController {
 	@GetMapping("/register")
 	public String register() {
 		return "board/register";
+	}
+	@PostMapping("/register")
+	public String register(Board vo) {	// 파라메터수집(vo) <-- 한글 인코딩
+		boardService.register(vo);	// 게시물 등록
+		return "redirect:/board/list";
 	}
 }

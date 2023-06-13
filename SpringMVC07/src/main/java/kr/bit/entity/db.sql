@@ -56,6 +56,7 @@ values('bit03','bit03','홍길동','010-3333-3333');
 
 select * from tblMember;
 
+delete from tblBoard where idx=0;
 delete from tblBoard where idx=1;
 delete from tblBoard where idx=2;
 delete from tblBoard where idx=3;
