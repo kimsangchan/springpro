@@ -33,6 +33,10 @@
 		where idx=#{idx}
 	</update>
 	
+	<delete id="delete">
+		delete from tblBoard where idx=#{idx}
+	</delete>
+	
 	<select id="read" resultType="kr.bit.entity.Board">
 		select * from tblBoard where idx=#{idx}
 	</select>

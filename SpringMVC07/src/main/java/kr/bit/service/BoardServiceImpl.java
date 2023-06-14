@@ -46,4 +46,9 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 
+	@Override
+	public void remove(int idx) {		
+		boardMapper.delete(idx);
+	}
+
 }

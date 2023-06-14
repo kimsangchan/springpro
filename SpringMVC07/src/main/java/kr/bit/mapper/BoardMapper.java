@@ -12,4 +12,5 @@ public interface BoardMapper {	// @, XML
 	public Member login(Member vo); // sQL
 	public Board read(int idx);
 	public void update(Board vo);
+	public void delete(int idx);
 }
