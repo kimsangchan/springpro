@@ -15,9 +15,21 @@
 	  <property name="username" value="com"/>
 	  <property name="password" value="com01"/>
 	</bean>	
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">	   
-	  <constructor-arg ref="hikariConfig"/>
-	</bean>	
+	<!-- HikariCP DataSource with log4jdbc -->
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	  <constructor-arg>
+	    <bean class="com.zaxxer.hikari.HikariDataSource">
+	      <constructor-arg ref="hikariConfig" />
+	    </bean>
+	  </constructor-arg>
+	  <property name="logFormatter">
+	    <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+	      <property name="loggingType" value="MULTI_LINE" />
+	      <property name="sqlPrefix" value="SQL : " />
+	    </bean>
+	  </property>
+	</bean>
+	
 	<bean  class="org.mybatis.spring.SqlSessionFactoryBean">
 	   <property name="dataSource" ref="dataSource"/>
 	</bean>	

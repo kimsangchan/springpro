@@ -43,10 +43,13 @@
     <div class="panel-heading">BOARD</div>
     <div class="panel-body">
     	<form id="frm" method="post">
+    	<input type="hidden" name="page" value="<c:out value='${cri.page}'/>"/>
+    	<input type="hidden" name="type" value="<c:out value='${cri.type}'/>"/>
+          <input type="hidden" name="keyword" value="<c:out value='${cri.keyword}'/>"/>
+          <input type="hidden" name="perPageNum" value="<c:out value='${cri.perPageNum}'/>"/>
+    	<!--  idx(원글,부모글) -->
     	<input type="hidden" id="idx" name="idx" value="${vo.idx}"/>
     	<input type="hidden" id="memID" name="memID" value="${mvo.memID}"/>
-    	<input type="hidden" name="page" value="<c:out value='${cri.page}'/>"/>
-          <input type="hidden" name="perPageNum" value="<c:out value='${cri.perPageNum}'/>"/>
     		<div class="form-group">
     			<label>제목</label>
     			<input type="text" id="title" name="title" class="form-control" value="${vo.title}"/>
@@ -65,7 +68,9 @@
     	</form>
     	<form id="frm1" method="get">
           <input type="hidden" name="page" value="<c:out value='${cri.page}'/>"/>
-          <input type="hidden" name="perPageNum" value="<c:out value='${cri.perPageNum}'/>"/>          
+          <input type="hidden" name="perPageNum" value="<c:out value='${cri.perPageNum}'/>"/>
+          <input type="hidden" name="type" value="<c:out value='${cri.type}'/>"/>
+          <input type="hidden" name="keyword" value="<c:out value='${cri.keyword}'/>"/>          
        </form>
     </div>
     <div class="panel-body">Surable Technology Co., Ltd</div>

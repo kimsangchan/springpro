@@ -11,7 +11,7 @@ public class PageMaker {
 	private int endPage;	// 마지막 페이지 번호(조절 가능)
 	private boolean prev;	// 이전페이지로 이동 버튼(true, false)
 	private boolean next;	// 다음버튼(true, false)
-	private int displayPageNum=3;	// 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+	private int displayPageNum=5;	// 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
 	//	총 게시글의 수를 구하는 메서드
 	public void setTotalCount(int totalCount) {
 		this.totalCount=totalCount;
