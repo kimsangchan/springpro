@@ -72,4 +72,8 @@
 		<include refid="search"/>
 	</select>
 	
+	<update id="countUpdate">
+	    update tblBoard set count=count+1 where idx=#{idx}
+    </update>
+	
 </mapper>

@@ -17,4 +17,5 @@ public interface BoardMapper {	// @, XML
 	public void replySeqUpdate(Board parent);
 	public void replyInsert(Board vo);
 	public int totalCount(Criteria cri);
+	public void countUpdate(int idx);
 }

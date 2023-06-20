@@ -11,9 +11,12 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="${cpath}/resources/css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"> 
   <script type="text/javascript">
   	$(document).ready(function(){
   		var result = '${result}';
@@ -40,7 +43,47 @@
     		pageFrm.attr("method", "get");
     		pageFrm.submit();
     	})
+    	 // 책 검색 버튼이 클릭 되었을때 처리
+      	$("#search").click(function(){
+      		var bookname=$("#bookname").val();
+      		if(bookname==""){
+      			alert("책 제목을 입력하세요");
+      			return false;
+      		}
+      		// Kakao 책 검색 openAPI를 연동하기(키를발급)
+      		// URL : https://dapi.kakao.com/v3/search/book?target=title
+      		// H : Authorization: KakaoAK 7f63086b05b9c2ab162b837ef17924de
+      		$.ajax({
+      			url : "https://dapi.kakao.com/v3/search/book?target=title",
+      			headers : {"Authorization": "KakaoAK 7f63086b05b9c2ab162b837ef17924de"},
+      			type : "get",
+      			data : {"query" : bookname},
+      			dataType : "json",
+      			success : bookPrint,
+      			error : function(){ alert("error");}	
+      		});
+      		$(document).ajaxStart(function(){ $(".loading-progress").show(); });
+      		$(document).ajaxStop(function(){ $(".loading-progress").hide(); });
+      	});    	
+    	// input box에 책 제목이 입력되면 자동으로 검색을 하는 기능
+    	$("#bookname").autocomplete({
+      		source : function(){ 
+      			var bookname=$("#bookname").val();
+      			$.ajax({
+          			url : "https://dapi.kakao.com/v3/search/book?target=title",
+          			headers : {"Authorization": "KakaoAK 7f63086b05b9c2ab162b837ef17924de"},
+          			type : "get",
+          			data : {"query" : bookname},
+          			dataType : "json",
+          			success : bookPrint,
+          			error : function(){ alert("error");}	
+          		});
+      		},
+      		minLength : 1    		
+      	});
   	});
+
+  		
   	function checkModal(result){
   		if(result ==''){
   			return;
@@ -55,38 +98,49 @@
   	function goMsg(){
   		alert('삭제된 게시물입니다.');
   	}
+  	function bookPrint(data){
+  	  	 var bList="<table class='table table-hover'>";
+  	  	 bList+="<thead>";
+  	  	 bList+="<tr>";
+  	  	 bList+="<th>책이미지</th>";
+  	  	 bList+="<th>책가격</th>";
+  	  	 bList+="</tr>";
+  	  	 bList+="</thead>";
+  	  	 bList+="<tbody>";
+  	  	 $.each(data.documents,function(index, obj){
+  	  		 var image=obj.thumbnail;
+  	  		 var price=obj.price;
+  	  		 var url=obj.url;
+  	  		 bList+="<tr>";
+  	      	 bList+="<td><a href='"+url+"'><img src='"+image+"' width='50px' height='60px'/></a></td>";
+  	      	 bList+="<td>"+price+"</td>";
+  	      	 bList+="</tr>";
+  	  	 }); 
+  	  	 bList+="</tbody>";
+  	  	 bList+="</table>";
+  	  	 $("#bookList").html(bList);
+  	   }
   </script>
 </head>
 <body>
  
-<div class="container">
-  <h2>Spring MVC</h2>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    	<c:if test="${empty mvo}">
-    	<form class="form-inline" action="${cpath}/login/loginProcess" method="post">
-		  <div class="form-group">
-		    <label for="memID">ID:</label>
-		    <input type="text" class="form-control" id="memID" name="memID">
+
+  <div class="card">
+    <div class="card-header">
+		<div class="jumbotron jumbotron-fluid">
+		  <div class="container">
+		    <h1>Spring Framework</h1>
+		    <p>Bootstrap is the most popular HTML, CSS...</p>
 		  </div>
-		  <div class="form-group">
-		    <label for="memPwd">Password:</label>
-		    <input type="password" class="form-control" id="memPwd" name="memPwd">
-		  </div>
-		  <button type="submit" class="btn btn-default">로그인</button>
-		</form>
-		</c:if>
-		<c:if test="${!empty mvo}">
-    	<form class="form-inline" action="${cpath}/login/logoutProcess" method="post">
-		  <div class="form-group">
-		    <label >${mvo.memName}님 방문을 환영합니다.</label>
-		  </div>
-		  <button type="submit" class="btn btn-default">로그아웃</button>
-		</form>
-		</c:if>
+		</div>
 	</div>
-    <div class="panel-body">
-    	<table class="table table-bordered table-hover">
+    <div class="card-body">
+		<div class="row">
+		  <div class="col-lg-2">
+			<jsp:include page="left.jsp"/>
+		  </div>
+		  <div class="col-lg-7">
+		  	<table class="table table-hover">
     		<thread>
     			<tr>
 	    			<td>번호</td>
@@ -102,7 +156,8 @@
 	    			<td> <c:if test="${vo.boardLevel>0}">
 		              <c:forEach begin="1" end="${vo.boardLevel}">
 		                 <span style="padding-left: 10px"></span>
-		              </c:forEach>            
+		              </c:forEach>
+		              <i class="bi bi-arrow-return-right"></i>            
 		            </c:if>
 		            <c:if test="${vo.boardLevel>0}">
 		              <c:if test="${vo.boardAvailable==1}">
@@ -135,42 +190,43 @@
     		</c:if>    		
     	</table>
     	<!-- 검색메뉴 -->
-       <div style="text-align: center;">
-		<form class="form-inline" action="${cpath}/board/list" method="post">
-		  <div class="form-group">	
-		   <select name="type" class="form-control">
+       <!-- 검색메뉴 -->
+      <form class="form-inline" action="${cpath}/board/list" method="post">
+	   <div class="container">
+	   <div class="input-group mb-3">
+	      <div class="input-group-append">
+		     <select name="type" class="form-control">
 		      <option value="writer" ${pageMaker.cri.type=='writer' ? 'selected' : ''}>이름</option>
 		      <option value="title" ${pageMaker.cri.type=='title' ? 'selected' : ''}>제목</option>
 		      <option value="content" ${pageMaker.cri.type=='content' ? 'selected' : ''}>내용</option>
 		   </select>
 		  </div>
-		  <div class="form-group">	
-		    <input type="text" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
+		  <input type="text" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
+		  <div class="input-group-append">
+		    <button class="btn btn-success" type="submit">Search</button>
 		  </div>
-		  <button type="submit" class="btn btn-success">검색</button>
-		</form>
-	   </div>
+		</div>
+		</div>
+       </form>    
     	<!-- 페이징 START -->
-    	<div class="pull-right">
-    	<ul class="pagination">
+    	<ul class="pagination justify-content-center">
     	<!-- 이전 처리 -->
     	 <c:if test="${pageMaker.prev}">
-	        <li class="paginate_button previous">
-	          <a href="${pageMaker.startPage-1}">◀</a>
+	        <li class="paginate_button previous page-item">
+	          <a href="${pageMaker.startPage-1}">Previous</a>
 	        </li>
 	      </c:if>  
     	<!-- 페이지번호 처리 -->
     		<c:forEach var="pageNum" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-	         <li class="paginate_button ${pageMaker.cri.page==pageNum ? 'active' : ''}"><a href="${pageNum}">${pageNum}</a></li>
+	         <li class="paginate_button ${pageMaker.cri.page==pageNum ? 'active' : ''} page-item"><a class="page-link" href="${pageNum}">${pageNum}</a></li>
 		  </c:forEach> 
     	<!-- 다음 처리 -->
     	<c:if test="${pageMaker.next}">
-	        <li class="paginate_button next">
-	          <a href="${pageMaker.endPage+1}">▶</a>
+	        <li class="paginate_button next page-item">
+	          <a href="${pageMaker.endPage+1}">Next</a>
 	        </li>
 	      </c:if> 
 		</ul>
-    	</div>
     	<!--  END -->
     	<form id="pageFrm" action="${cpath}/board/list" method="post">
          <!-- 게시물 번호(idx)추가 -->         
@@ -186,8 +242,9 @@
 		    <!-- Modal content-->
 		    <div class="modal-content">
 		      <div class="modal-header">
+		      	<h4 class="modal-title">Modal Header</h4>
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">Modal Header</h4>
+		        
 		      </div>
 		      <div class="modal-body">		      		       
 		      </div>
@@ -198,11 +255,15 @@
 		
 		  </div>
 		</div>
-	  <!-- Modal END -->	
-    </div>
-    <div class="panel-body">Surable Technology Co., Ltd</div>
+	  <!-- Modal END -->
+		  </div>
+		  <div class="col-lg-3">
+		  	<jsp:include page="right.jsp"/>
+		  </div>
+		</div>
+	</div> 
+    <div class="card-footer">Surable Technology Co., Ltd</div>
   </div>
-</div>
 
 </body>
 </html>
